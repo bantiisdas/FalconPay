@@ -1,0 +1,174 @@
+import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { colors } from '@/constants/colors';
+import { spacing } from '@/constants/spacing';
+
+export type TransactionType = 'sent' | 'received' | 'swap';
+
+export type TransactionIconType = 'payment' | 'sol' | 'swap' | 'bonk' | 'coffee' | 'avatar' | 'default';
+
+export interface TransactionItemProps {
+  id: string;
+  title: string;
+  amount: string;
+  type: TransactionType;
+  subtitle?: string;
+  date?: string;
+  time?: string;
+  showDivider?: boolean;
+  iconType?: TransactionIconType;
+  iconColor?: string;
+}
+
+function TransactionIcon({
+  iconType,
+  type,
+  iconColor,
+}: {
+  iconType: TransactionIconType;
+  type: TransactionType;
+  iconColor?: string;
+}) {
+  const bg = iconColor ?? (type === 'received' ? colors.primary + '30' : colors.primary + '30');
+  if (iconType === 'payment') {
+    return (
+      <View style={[styles.iconWrap, { backgroundColor: '#2563EB30' }]}>
+        <Text style={styles.iconSymbol}>$</Text>
+      </View>
+    );
+  }
+  if (iconType === 'sol') {
+    return (
+      <View style={[styles.iconWrap, { backgroundColor: '#6366F130' }]}>
+        <Text style={styles.iconSymbol}>S</Text>
+      </View>
+    );
+  }
+  if (iconType === 'swap') {
+    return (
+      <View style={[styles.iconWrap, { backgroundColor: '#2563EB30' }]}>
+        <Ionicons name="swap-horizontal" size={20} color={colors.primary} />
+      </View>
+    );
+  }
+  if (iconType === 'bonk') {
+    return (
+      <View style={[styles.iconWrap, { backgroundColor: colors.brandOrange + '40' }]}>
+        <Text style={styles.iconSymbol}>B</Text>
+      </View>
+    );
+  }
+  if (iconType === 'coffee') {
+    return (
+      <View style={[styles.iconWrap, { backgroundColor: '#EC489940' }]}>
+        <Ionicons name="bag-handle-outline" size={20} color={colors.text} />
+      </View>
+    );
+  }
+  if (iconType === 'avatar') {
+    return (
+      <View style={[styles.iconWrap, { backgroundColor: colors.primary + '30' }]}>
+        <Text style={styles.iconSymbol}>A</Text>
+      </View>
+    );
+  }
+  const iconName = type === 'received' ? 'arrow-down' : 'arrow-up';
+  const color = type === 'received' ? colors.success : colors.textMuted;
+  return (
+    <View style={[styles.iconWrap, { backgroundColor: color + '20' }]}>
+      <Ionicons name={iconName} size={20} color={color} />
+    </View>
+  );
+}
+
+export function TransactionItem({
+  title,
+  amount,
+  type,
+  subtitle,
+  date,
+  time,
+  showDivider = true,
+  iconType = 'default',
+  iconColor,
+}: TransactionItemProps) {
+  const isReceived = type === 'received';
+  const isSwap = type === 'swap';
+  const amountColor = isReceived
+    ? colors.success
+    : isSwap
+      ? colors.text
+      : colors.error;
+  const amountPrefix = isSwap ? '' : isReceived ? '+' : '-';
+
+  const timeLabel = time ?? date;
+
+  return (
+    <View style={[styles.row, showDivider && styles.rowBorder]}>
+      <TransactionIcon iconType={iconType} type={type} iconColor={iconColor} />
+      <View style={styles.content}>
+        <Text style={styles.title} numberOfLines={1}>
+          {title}
+        </Text>
+        {subtitle ? (
+          <Text style={styles.subtitle} numberOfLines={1}>{subtitle}</Text>
+        ) : timeLabel ? (
+          <Text style={styles.date}>{timeLabel}</Text>
+        ) : null}
+      </View>
+      <Text style={[styles.amount, { color: amountColor }]}>
+        {amountPrefix}{amount}
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
+  rowBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  iconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.md,
+  },
+  iconSymbol: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.text,
+  },
+  content: {
+    flex: 1,
+    minWidth: 0,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: colors.text,
+  },
+  subtitle: {
+    fontSize: 12,
+    color: colors.secondaryText,
+    marginTop: spacing.xs,
+  },
+  date: {
+    fontSize: 12,
+    color: colors.secondaryText,
+    marginTop: spacing.xs,
+  },
+  amount: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
