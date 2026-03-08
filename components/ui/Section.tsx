@@ -10,7 +10,7 @@ export interface SectionProps extends ViewProps {
 }
 
 /**
- * Screen section with optional title. Uses FalconPay spacing (8px grid)
+ * Screen section with optional title. Uses PhalconPay spacing (8px grid)
  * and consistent section title typography.
  */
 export function Section({ title, children, style, ...viewProps }: SectionProps) {

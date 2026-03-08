@@ -39,7 +39,7 @@ import {
 } from "../services/jupiter";
 
 const APP_IDENTITY = {
-  name: "SolScan",
+  name: "PhalconPay",
   uri: "https://solscan.io",
   icon: "favicon.ico",
 };

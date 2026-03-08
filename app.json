@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "foxpay",
-    "slug": "foxpay",
+    "name": "PhalconPay",
+    "slug": "phalconpay",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "foxpay",
+    "icon": "./assets/images/App_Icon.png",
+    "scheme": "phalconpay",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -14,17 +14,17 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/App_Icon.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.bantibuto3.foxpay"
+      "package": "com.bantibuto3.phalconpay"
     },
     "web": {
       "output": "static",
@@ -61,6 +61,12 @@
       "eas": {
         "projectId": "75dceaeb-d4ec-4de3-8f74-29a9fd61f902"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/75dceaeb-d4ec-4de3-8f74-29a9fd61f902"
     }
   }
 }

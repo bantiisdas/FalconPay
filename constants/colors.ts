@@ -1,5 +1,5 @@
 /**
- * FalconPay design system – color palette.
+ * PhalconPay design system – color palette.
  * All UI colors must come from here. Do not hardcode colors in components.
  */
 

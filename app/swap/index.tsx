@@ -18,6 +18,7 @@ import {
   View,
 } from "react-native";
 
+import { InAppLogo } from "@/components/InAppLogo";
 import { Header, HeaderButton } from "@/components/ui/Header";
 import { Card } from "@/components/ui/Card";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
@@ -248,12 +249,6 @@ export default function SwapScreen() {
     inputAmount,
   ]);
 
-  const onSettingsPress = useCallback(() => {
-    Alert.alert(
-      "Swap settings",
-      `Slippage tolerance: ${SLIPPAGE_PCT}%. You can change this in a future update.`,
-    );
-  }, []);
 
   const exchangeRateText =
     wallet.quotedata && inputAmount && Number(inputAmount) > 0
@@ -314,12 +309,9 @@ export default function SwapScreen() {
           </HeaderButton>
         }
         right={
-          <HeaderButton
-            onPress={onSettingsPress}
-            accessibilityLabel="Swap settings"
-          >
-            <Ionicons name="settings-outline" size={24} color={colors.text} />
-          </HeaderButton>
+          <View style={styles.headerLogo}>
+            <InAppLogo size={28} />
+          </View>
         }
       />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -523,6 +515,12 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
+  headerLogo: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   scroll: { flex: 1 },
   scrollContent: {
     paddingHorizontal: spacing.lg,

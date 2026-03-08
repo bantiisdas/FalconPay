@@ -1,4 +1,4 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -19,6 +19,7 @@ import type { TokenOption } from "@/components/TokenSelector";
 import { TokenSelector } from "@/components/TokenSelector";
 import { Button } from "@/components/ui/Button";
 import { Header, HeaderButton } from "@/components/ui/Header";
+import { InAppLogo } from "@/components/InAppLogo";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { colors } from "@/constants/colors";
 import { spacing } from "@/constants/spacing";
@@ -370,11 +371,7 @@ export default function SendScreen() {
         }
         right={
           <View style={styles.logo}>
-            <MaterialCommunityIcons
-              name="flash"
-              size={24}
-              color={colors.text}
-            />
+            <InAppLogo size={28} />
           </View>
         }
       />
@@ -480,8 +477,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 40,
     height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,5 +1,5 @@
 /**
- * FalconPay design system – 8px spacing grid.
+ * PhalconPay design system – 8px spacing grid.
  * Use these values for padding, margins, and gaps.
  */
 

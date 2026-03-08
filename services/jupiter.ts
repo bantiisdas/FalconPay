@@ -371,23 +371,40 @@ export async function getSwapTransaction(
   return swapTx.swapTransaction;
 }
 
-//Get Token Price - Current USD Price
+/** Jupiter price v3: response is { [mintAddress]: { usdPrice, ... } } */
+const JUPITER_PRICE_V3 = "https://api.jup.ag/price/v3";
+
+/** Fetch USD price for a single token. */
 export async function getTokenPrice(mintAddress: string): Promise<number> {
+  const prices = await getTokenPrices([mintAddress]);
+  return prices[mintAddress] ?? 0;
+}
+
+/** Fetch current USD prices for multiple token mints. Returns { [mint]: usdPrice }. */
+export async function getTokenPrices(
+  mintAddresses: string[],
+): Promise<Record<string, number>> {
+  if (mintAddresses.length === 0) return {};
   try {
-    const response = await fetch(
-      `https://api.jup.ag/price/v3?ids=${mintAddress}`,
-      {
-        method: "GET",
-        headers: { "x-api-key": JUPITER_API_KEY },
-      },
-    );
-
-    const price = await response.json();
-
-    return price?.mintAddress?.usdPrice || 0;
-  } catch (error: any) {
-    console.log(error.message);
-    return 0;
+    const ids = mintAddresses.join(",");
+    const response = await fetch(`${JUPITER_PRICE_V3}?ids=${ids}`, {
+      method: "GET",
+      headers: { "x-api-key": JUPITER_API_KEY, Accept: "application/json" },
+    });
+    if (!response.ok) return {};
+    const data = (await response.json()) as Record<
+      string,
+      { usdPrice?: number }
+    >;
+    const result: Record<string, number> = {};
+    for (const mint of mintAddresses) {
+      const usdPrice = data[mint]?.usdPrice;
+      result[mint] = typeof usdPrice === "number" ? usdPrice : 0;
+    }
+    return result;
+  } catch (e) {
+    console.warn("[jupiter] getTokenPrices failed:", e);
+    return {};
   }
 }
 

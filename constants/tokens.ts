@@ -50,6 +50,16 @@ export const TOKEN_INFO: Record<
   },
 };
 
+/** Approximate USD value per 1 unit of token (for total balance). Replace with price API later. */
+export const TOKEN_USD_ESTIMATES: Record<string, number> = {
+  SOL: 19,
+  USDC: 1,
+  USDT: 1,
+  BONK: 0.00002, // ~50k BONK per USD
+  JUP: 0.58,
+  WIF: 2.5,
+};
+
 // list of available tokens for the picker and asset list (order: SOL, USDC, JUP, BONK, USDT, WIF)
 export const AVAILABLE_TOKENS = [
   TOKENS.SOL,

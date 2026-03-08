@@ -1,7 +1,7 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { InAppLogo } from '@/components/InAppLogo';
 import { HeaderButton } from '@/components/ui/Header';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
@@ -12,7 +12,7 @@ export function TransactionsHeader() {
       <View style={styles.left}>
         <Text style={styles.title}>Transactions</Text>
         <View style={styles.logo}>
-          <MaterialCommunityIcons name="flash" size={20} color={colors.primary} />
+          <InAppLogo size={24} />
         </View>
       </View>
       <View style={styles.right}>
@@ -37,8 +37,6 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     paddingBottom: spacing.lg,
     backgroundColor: colors.background,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.08)',
   },
   left: {
     flexDirection: 'row',
@@ -53,8 +51,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 28,
     height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.primary + '30',
     alignItems: 'center',
     justifyContent: 'center',
   },

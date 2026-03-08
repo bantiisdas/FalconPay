@@ -10,6 +10,8 @@ import { RecentTransactions } from "@/components/RecentTransactions";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { colors } from "@/constants/colors";
 import { spacing } from "@/constants/spacing";
+import { AVAILABLE_TOKENS, TOKEN_INFO } from "@/constants/tokens";
+import { getTokenPrices } from "@/services/jupiter";
 import {
   useTransactionsStore,
   getRecentTransactionRows,
@@ -25,8 +27,26 @@ function formatSol(sol: number): string {
   return sol.toFixed(6);
 }
 
-/** Rough USD value (e.g. for display). Replace with real price feed later. */
-const SOL_USD_ESTIMATE = 19;
+/** Total balance in USD: SOL + all tokens, using Jupiter USD prices (mint -> usdPrice). */
+function computeTotalBalanceUsd(
+  balanceSol: number | null,
+  tokenBalances: Record<string, string>,
+  pricesByMint: Record<string, number>,
+): number {
+  let total = 0;
+  for (const mint of AVAILABLE_TOKENS) {
+    const info = TOKEN_INFO[mint];
+    if (!info) continue;
+    const usdPrice = pricesByMint[mint] ?? 0;
+    if (info.symbol === "SOL") {
+      total += (balanceSol ?? 0) * usdPrice;
+    } else {
+      const amount = parseFloat(tokenBalances[info.symbol] ?? "0") || 0;
+      total += amount * usdPrice;
+    }
+  }
+  return total;
+}
 
 const RECENT_LIMIT = 8;
 
@@ -38,6 +58,7 @@ export default function HomeScreen() {
   const [tokenBalances, setTokenBalances] = useState<Record<string, string>>(
     {},
   );
+  const [pricesByMint, setPricesByMint] = useState<Record<string, number>>({});
   const [balanceLoading, setBalanceLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -45,15 +66,18 @@ export default function HomeScreen() {
     if (!connected || !getBalance) return;
     setBalanceLoading(true);
     try {
-      const [sol, tokens] = await Promise.all([
+      const [sol, tokens, prices] = await Promise.all([
         getBalance(),
         getTokenBalances?.() ?? Promise.resolve({}),
+        getTokenPrices(AVAILABLE_TOKENS),
       ]);
       setBalanceSol(sol);
       setTokenBalances(tokens);
+      setPricesByMint(prices);
     } catch {
       setBalanceSol(null);
       setTokenBalances({});
+      setPricesByMint({});
     } finally {
       setBalanceLoading(false);
     }
@@ -64,6 +88,8 @@ export default function HomeScreen() {
       fetchBalance();
     } else {
       setBalanceSol(null);
+      setTokenBalances({});
+      setPricesByMint({});
     }
   }, [connected, fetchBalance]);
 
@@ -73,15 +99,15 @@ export default function HomeScreen() {
     setRefreshing(false);
   }, [fetchBalance]);
 
+  const totalUsd =
+    connected && !balanceLoading
+      ? computeTotalBalanceUsd(balanceSol, tokenBalances, pricesByMint)
+      : 0;
   const balanceDisplay = balanceLoading
     ? "..."
-    : connected && balanceSol !== null
-      ? `$${(balanceSol * SOL_USD_ESTIMATE).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    : connected
+      ? `$${totalUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
       : "$0.00";
-  const cryptoBreakdown =
-    connected && balanceSol !== null && !balanceLoading
-      ? `$${(balanceSol * SOL_USD_ESTIMATE).toLocaleString(undefined, { minimumFractionDigits: 2 })} | ${formatSol(balanceSol)} SOL`
-      : undefined;
 
   return (
     <ScreenContainer edges={["top"]} paddingHorizontal="lg" paddingBottom="xl">

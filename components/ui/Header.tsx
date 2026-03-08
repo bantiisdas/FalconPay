@@ -14,8 +14,6 @@ export interface HeaderProps extends ViewProps {
   left?: React.ReactNode;
   right?: React.ReactNode;
   middle?: React.ReactNode;
-  /** Hide bottom border. Default: false. */
-  noBorder?: boolean;
 }
 
 export function Header({
@@ -23,15 +21,11 @@ export function Header({
   left,
   right,
   middle,
-  noBorder = false,
   style,
   ...viewProps
 }: HeaderProps) {
   return (
-    <View
-      style={[styles.container, !noBorder && styles.border, style]}
-      {...viewProps}
-    >
+    <View style={[styles.container, style]} {...viewProps}>
       <View style={styles.left} pointerEvents="box-none">
         {left}
       </View>
@@ -87,10 +81,6 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     paddingBottom: spacing.lg,
     backgroundColor: colors.background,
-  },
-  border: {
-    borderBottomWidth: 1,
-    borderBottomColor: "rgba(255, 255, 255, 0.08)",
   },
   left: {
     //flex: 1,

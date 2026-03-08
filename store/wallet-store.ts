@@ -26,7 +26,7 @@ export const useWalletStore = create<WalletState>()(
     (set, get) => ({
       favorites: [],
       searchHistory: [],
-      isDevnet: true,
+      isDevnet: false,
       connectedPublicKey: null,
       displayName: "",
 

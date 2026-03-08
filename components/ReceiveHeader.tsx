@@ -1,7 +1,7 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { InAppLogo } from '@/components/InAppLogo';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 
@@ -19,7 +19,7 @@ export function ReceiveHeader() {
       </Pressable>
       <Text style={styles.title}>Receive</Text>
       <View style={styles.logo}>
-        <MaterialCommunityIcons name="flash" size={20} color={colors.primary} />
+        <InAppLogo size={24} />
       </View>
     </View>
   );
@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     paddingBottom: spacing.lg,
     backgroundColor: colors.background,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.08)',
   },
   backBtn: {
     padding: spacing.sm,
@@ -59,8 +57,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 32,
     height: 32,
-    borderRadius: 16,
-    backgroundColor: colors.primary + '25',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -72,7 +72,7 @@ export default function ReceiveScreen() {
       try {
         const base64 = dataUrl.replace(/^data:image\/\w+;base64,/, "");
         const bytes = base64ToUint8Array(base64);
-        const file = new File(Paths.cache, "falconpay-qr.png");
+        const file = new File(Paths.cache, "phalconpay-qr.png");
         file.create({ overwrite: true });
         file.write(bytes);
         const shareUri =
@@ -124,7 +124,7 @@ export default function ReceiveScreen() {
                 backgroundColor="#FFF"
               />
             </View>
-            <Text style={styles.walletName}>FalconPay</Text>
+            <Text style={styles.walletName}>PhalconPay</Text>
             <Text style={styles.shortAddress}>
               Address: {walletAddress ? shortenAddress(walletAddress) : "—"}
             </Text>

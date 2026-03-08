@@ -1,8 +1,8 @@
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from "react-native";
 
-import { Card } from '@/components/ui/Card';
-import { colors } from '@/constants/colors';
-import { spacing } from '@/constants/spacing';
+import { Card } from "@/components/ui/Card";
+import { colors } from "@/constants/colors";
+import { spacing } from "@/constants/spacing";
 
 export interface BalanceCardProps {
   balance: string;
@@ -14,12 +14,16 @@ export interface BalanceCardProps {
 
 export function BalanceCard({
   balance,
-  label = 'Total Balance',
+  label = "Total Balance",
   cryptoBreakdown,
   withMargin = true,
 }: BalanceCardProps) {
   return (
-    <Card padding="xl" withMargin={withMargin} style={[styles.card, styles.glow]}>
+    <Card
+      padding="xl"
+      withMargin={withMargin}
+      style={[styles.card, styles.glow]}
+    >
       <Text style={styles.labelText}>{label}</Text>
       <Text style={styles.amountText}>{balance}</Text>
       {cryptoBreakdown ? (
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: spacing.xl,
     borderWidth: 1,
-    borderColor: 'rgba(37, 99, 235, 0.3)',
+    borderColor: "rgba(37, 99, 235, 0.3)",
   },
   glow: {
     shadowColor: colors.primary,
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
   },
   amountText: {
     fontSize: 32,
-    fontWeight: '700',
+    fontWeight: "700",
     color: colors.text,
     marginBottom: spacing.sm,
   },

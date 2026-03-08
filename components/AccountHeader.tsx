@@ -1,24 +1,18 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { InAppLogo } from '@/components/InAppLogo';
 import { colors } from '@/constants/colors';
 import { spacing } from '@/constants/spacing';
 
 export function AccountHeader() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Account</Text>
-      <View style={styles.logo}>
-        <MaterialCommunityIcons name="flash" size={20} color={colors.primary} />
+      <View style={styles.centerRow}>
+        <Text style={styles.title}>Account</Text>
+        <View style={styles.logo}>
+          <InAppLogo size={24} />
+        </View>
       </View>
-      <Pressable
-        style={({ pressed }) => [styles.settingsBtn, pressed && styles.pressed]}
-        hitSlop={spacing.lg}
-        accessibilityRole="button"
-        accessibilityLabel="Settings">
-        <Ionicons name="settings-outline" size={24} color={colors.text} />
-      </Pressable>
     </View>
   );
 }
@@ -27,14 +21,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
     paddingTop: spacing.lg,
     paddingBottom: spacing.lg,
     backgroundColor: colors.background,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.08)',
+  },
+  centerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
   },
   title: {
     fontSize: 20,
@@ -44,15 +41,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 32,
     height: 32,
-    borderRadius: 16,
-    backgroundColor: colors.primary + '25',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  settingsBtn: {
-    padding: spacing.sm,
-  },
-  pressed: {
-    opacity: 0.7,
   },
 });

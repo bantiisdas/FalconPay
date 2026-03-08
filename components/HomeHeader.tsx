@@ -1,7 +1,7 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { InAppLogo } from "@/components/InAppLogo";
 import { colors } from "@/constants/colors";
 import { spacing } from "@/constants/spacing";
 import { useWalletStore } from "@/store/wallet-store";
@@ -10,7 +10,7 @@ export interface HomeHeaderProps {
   title?: string;
 }
 
-export function HomeHeader({ title = "FalconPay" }: HomeHeaderProps) {
+export function HomeHeader({ title = "PhalconPay" }: HomeHeaderProps) {
   const router = useRouter();
   const isDevnet = useWalletStore((s) => s.isDevnet);
   const toggleNetwork = useWalletStore((s) => s.toggleNetwork);
@@ -24,7 +24,7 @@ export function HomeHeader({ title = "FalconPay" }: HomeHeaderProps) {
     <View style={styles.container}>
       <View style={styles.logoRow}>
         <View style={styles.logo}>
-          <MaterialCommunityIcons name="flash" size={24} color={colors.text} />
+          <InAppLogo size={28} />
         </View>
         <Text style={styles.title} numberOfLines={1}>
           {title}
@@ -79,8 +79,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 40,
     height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
