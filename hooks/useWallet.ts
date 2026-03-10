@@ -68,7 +68,7 @@ const TOKEN_PROGRAM_ID = new PublicKey(
 
 const APP_IDENTITY = {
   name: "PhalconPay",
-  uri: "https://solscan.io",
+  uri: "https://phalconpay--vzjkxoxnk3.expo.app/",
   icon: "favicon.ico",
 };
 

@@ -17,12 +17,11 @@ import {
 import QRCode from "react-native-qrcode-svg";
 
 import { ReceiveHeader } from "@/components/ReceiveHeader";
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ScreenContainer } from "@/components/ui/ScreenContainer";
 import { colors } from "@/constants/colors";
 import { spacing } from "@/constants/spacing";
-import { RECEIVE_TOKEN_CHIPS, TOKENS, TOKENS_CONFIG } from "@/constants/tokens";
+import { RECEIVE_TOKEN_CHIPS, TOKENS } from "@/constants/tokens";
 import { useWallet } from "@/hooks/useWallet";
 import { buildSolanaPayUrl } from "@/services/solanaPay";
 
@@ -263,13 +262,13 @@ export default function ReceiveScreen() {
             {walletAddress || "Connect wallet to see address"}
           </Text>
 
-          <Button
+          {/* <Button
             title={addressCopied ? "Copied" : "Copy Address"}
             onPress={handleCopyAddress}
             fullWidth
             disabled={!walletAddress}
             style={[styles.ctaButton, addressCopied && styles.ctaButtonCopied]}
-          />
+          /> */}
         </ScrollView>
       </KeyboardAvoidingView>
     </ScreenContainer>
